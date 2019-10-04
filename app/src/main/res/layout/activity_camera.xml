@@ -7,13 +7,40 @@
     tools:context=".CameraActivity">
 
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="162dp"
+        android:layout_height="172dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="132dp"
+        android:layout_marginEnd="112dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnStop"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="184dp"
+        android:layout_height="69dp"
+        android:layout_marginEnd="68dp"
+        android:layout_marginTop="172dp"
+        android:text="Stop"
+        app:cornerRadius="16dp"
+        app:iconPadding="-12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.71"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCamera"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="184dp"
         android:layout_height="69dp"
         android:layout_marginEnd="68dp"
-        android:layout_marginTop="184dp"
+        android:layout_marginTop="64dp"
         android:text="Capture"
         app:cornerRadius="16dp"
         app:iconPadding="-12dp"
@@ -23,19 +50,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnStop"
+        android:id="@+id/btnSend"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="184dp"
         android:layout_height="69dp"
-        android:layout_marginEnd="68dp"
-        android:layout_marginTop="436dp"
-        android:text="Stop"
+        android:layout_marginEnd="112dp"
+        android:layout_marginTop="36dp"
+        android:text="Send Commands"
         app:cornerRadius="16dp"
         app:iconPadding="-12dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.71"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/btnStop" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

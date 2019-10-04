@@ -10,6 +10,15 @@ public class SendThread extends Thread{
         this.dos = dos;
 
     }
+    public static void StopThread()
+    {
+        try {
+            dos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    Thread.currentThread().interrupt();
+    }
     public static void sendInt(int i)
     {
         try {
