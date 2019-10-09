@@ -22,10 +22,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-package TopCodes;
+package com.TopCodes;
 
 import java.util.List;
-import TopCodes.TopCode;
+import com.TopCodes.TopCode;
 import android.graphics.Bitmap;
 
 /**

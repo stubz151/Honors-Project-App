@@ -12,10 +12,11 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 
-import TopCodes.TopCode;
-import TopCodes.Scanner;
-import java.util.ArrayList;
+import com.TopCodes.Scanner;
+import com.TopCodes.TopCode;
 
+import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class CameraActivity extends AppCompatActivity implements MyAdapter.ItemClickListener{
@@ -28,12 +29,12 @@ public class CameraActivity extends AppCompatActivity implements MyAdapter.ItemC
     RecyclerView recyclerView;
     ArrayList<String> moveNames;
     @Override
+    //sets what happens when it is created, initially the list is empty then when the tokens are scanned more are added
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
         moveNames = new ArrayList<>();
         // set up the RecyclerView
-
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(CameraActivity.this));
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), LinearLayoutManager.VERTICAL);
@@ -42,6 +43,7 @@ public class CameraActivity extends AppCompatActivity implements MyAdapter.ItemC
         adapter = new MyAdapter(this, moveNames);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
+        //sets code for the camera
         Button btnCamera = findViewById(R.id.btnCamera);
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,17 +54,19 @@ public class CameraActivity extends AppCompatActivity implements MyAdapter.ItemC
                 }
             }
         });
+        //code to send through the commands
         Button btnSend = findViewById(R.id.btnSend);
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (int i =codes.size()-1 ; i <= 0; i++)
+                for (int i =0 ; i < codes.size(); i++)
                 {
                     SendThread.sendInt(codes.get(i).getCode());
                 }
                 SendThread.sendInt(-1);
             }
         });
+        //stops the connection and goes back to home activity
         Button btnStop = findViewById(R.id.btnStop);
         btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +79,7 @@ public class CameraActivity extends AppCompatActivity implements MyAdapter.ItemC
             }
         });
     }
-
+    //removes an item from the list on click
     @Override
     public void onItemClick(View view, int position) {
         codes.remove(position);
@@ -85,7 +89,7 @@ public class CameraActivity extends AppCompatActivity implements MyAdapter.ItemC
         adapter.notifyItemRangeChanged(position, codes.size());
 
     }
-
+    //takes code and returns the string value of command.
     private String getName(int code)
     {
         switch (code){
@@ -95,10 +99,13 @@ public class CameraActivity extends AppCompatActivity implements MyAdapter.ItemC
             case 47: return "Backward";
             case 155: return "While Not blocked move Forward";
             case 91: return "While Not blocked Backwards move Backward";
+            case 107: return "For 3 times";
+            case 109:return "for 4 times";
             default: return "Invalid scan option";
         }
 
     }
+    //Takes the int list and sets it to the string names
     private void setList()
     {
         moveNames.clear();
@@ -108,7 +115,7 @@ public class CameraActivity extends AppCompatActivity implements MyAdapter.ItemC
             adapter.notifyDataSetChanged();
         }
     }
-
+    //Gets the result of the camera and scans it.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

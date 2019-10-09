@@ -4,8 +4,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 public class SendThread extends Thread{
-    private static DataOutputStream dos;
-
+    public static DataOutputStream dos;
+    //class takes an output stream and starts a thread that can be used to send through information.
     public SendThread(DataOutputStream dos) {
         this.dos = dos;
 

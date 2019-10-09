@@ -29,15 +29,24 @@ public class MainActivity extends AppCompatActivity {
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                nxtCommAndroid = new NXTCommAndroid();
-                BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-                if (!bluetoothAdapter.isEnabled())
+                //if there is already a connection it just starsts the camera activity else, it tries to setup the connection and SendThread then move on.
+                if (SendThread.dos!=null)
+                {
+                    if (sendThread.isAlive())
                     {
+                        Intent myIntent = new Intent(MainActivity.this, CameraActivity.class);
+                        startActivity(myIntent);
+                    }
+
+                }
+                else {
+                    nxtCommAndroid = new NXTCommAndroid();
+                    BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                    if (!bluetoothAdapter.isEnabled()) {
                         Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                         startActivityForResult(enableBtIntent, 1);
                     }
-                    if (bluetoothAdapter.isEnabled())
-                    {
+                    if (bluetoothAdapter.isEnabled()) {
 
                         boolean connected = false;
                         try {
@@ -45,12 +54,9 @@ public class MainActivity extends AppCompatActivity {
                         } catch (NXTCommException e) {
                             e.printStackTrace();
                         }
-                        if (!connected)
-                        {
-                            Toast.makeText(getApplicationContext(),"Could not connect, Please make sure Bluetooth is on and robot is running Main.nxj", Toast.LENGTH_LONG).show();
-                        }
-                        else
-                        {
+                        if (!connected) {
+                            Toast.makeText(getApplicationContext(), "Could not connect, Please make sure Bluetooth is on and robot is running Main.nxj", Toast.LENGTH_LONG).show();
+                        } else {
                             dos = new DataOutputStream(nxtCommAndroid.getOutputStream());
                             sendThread = new SendThread(dos);
                             sendThread.start();
@@ -59,8 +65,10 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                     }
+                }
                     }
         });
+        //starts the help activity
         Button btnHelp = findViewById(R.id.btnHelp);
         btnHelp.setOnClickListener(new View.OnClickListener() {
             @Override
